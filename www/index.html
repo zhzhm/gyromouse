@@ -1,1 +1,103 @@
-<html>Hello the world</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="oxxo.studio">
+    <meta name="copyright" content="oxxo.studio">
+    <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>HTML5 控制裝置陀螺儀 ( 三軸 ) demo1 - OXXO.STUDIO</title>
+    <style>
+        body{
+            margin:50px;
+            font-size:15px;
+        }
+    </style>
+    <script>
+        if(window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function(event) {
+                var a = document.getElementById('alpha'),
+                    b = document.getElementById('beta'),
+                    g = document.getElementById('gamma'),
+                    alpha = event.alpha,
+                    beta = event.beta,
+                    gamma = event.gamma;
+
+                a.innerHTML = Math.round(alpha);
+                b.innerHTML = Math.round(beta);
+                g.innerHTML = Math.round(gamma);
+
+            }, false);
+        }else{
+            document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
+        }
+        function WebSocketTest()
+        {
+            if ("WebSocket" in window)
+            {
+                alert("您的浏览器支持 WebSocket!");
+
+                // 打开一个 web socket
+                var ws = new WebSocket("ws://192.168.1.132:7778/ws");
+
+                ws.onopen = function()
+                {
+                    // Web Socket 已连接上，使用 send() 方法发送数据
+                    ws.send("发送数据");
+                    alert("数据发送中...");
+                };
+
+                ws.onmessage = function (evt)
+                {
+                    var received_msg = evt.data;
+                    alert("数据已接收...");
+                };
+
+                ws.onclose = function()
+                {
+                    // 关闭 websocket
+                    alert("连接已关闭...");
+                };
+            }
+
+            else
+            {
+                // 浏览器不支持 WebSocket
+                alert("您的浏览器不支持 WebSocket!");
+            }
+        }
+    </script>
+</head>
+<body>
+alpha:<span id="alpha"></span><br/>
+beta:<span id="beta"></span><br/>
+gamma:<span id="gamma"></span><br/>
+
+<br/><br>
+<button onclick="WebSocketTest()">Start WebSocket</button>
+
+<style>
+    #info {
+        position: fixed;
+        z-index: 999;
+        bottom: 20px;
+        left: 0px;
+        background: #222;
+        padding: 20px 30px;
+        color: #fff;
+        box-shadow: rgba(0, 0, 0, .5) 0 0 10px;
+        border-radius: 0 5px 5px 0;
+        font-size:16px;
+    }
+
+    #info a {
+        color: #0bf;
+        transition: .2s;
+    }
+
+    #info a:hover {
+        color: #6df;
+    }
+</style>
+</body>
+</html>

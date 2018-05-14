@@ -60,13 +60,13 @@ public class App {
         handler.setContextPath("/ws");
         handler.addServlet(new ServletHolder(RemoteController.class), "/ws");
         ResourceHandler webHandler = new ResourceHandler();  //静态资源处理的handler
-        「」
+
         webHandler.setDirectoriesListed(true);  //会显示一个列表
         webHandler.setWelcomeFiles(new String[]{"index.html"});
         webHandler.setResourceBase("www");
 
         HandlerList handlers = new HandlerList();
-//        handlers.addHandler(handler);
+        handlers.addHandler(handler);
         handlers.addHandler(webHandler);
 
         server.setHandler(handlers);
