@@ -58,7 +58,7 @@ public class App {
 //        ContextHandler context = new ContextHandler();
         /* 路径 */
         handler.setContextPath("/ws");
-        handler.addServlet(new ServletHolder(RemoteController.class), "/ws");
+        handler.addServlet(new ServletHolder(RemoteController.class), "/");
         ResourceHandler webHandler = new ResourceHandler();  //静态资源处理的handler
 
         webHandler.setDirectoriesListed(true);  //会显示一个列表

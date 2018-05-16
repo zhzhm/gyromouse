@@ -6,7 +6,7 @@
     <meta name="author" content="oxxo.studio">
     <meta name="copyright" content="oxxo.studio">
     <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>HTML5 控制裝置陀螺儀 ( 三軸 ) demo1 - OXXO.STUDIO</title>
+    <title>HTML5 控制裝置陀螺儀 ( 三軸 ) demo2 - OXXO.STUDIO</title>
     <style>
         body{
             margin:50px;
@@ -14,18 +14,25 @@
         }
     </style>
     <script>
+        var webSock = undefined
         if(window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(event) {
-                var a = document.getElementById('alpha'),
-                    b = document.getElementById('beta'),
-                    g = document.getElementById('gamma'),
-                    alpha = event.alpha,
-                    beta = event.beta,
-                    gamma = event.gamma;
+//                var a = document.getElementById('alpha'),
+//                    b = document.getElementById('beta'),
+//                    g = document.getElementById('gamma'),
+                  var  orientation = event.alpha+","+
+                        event.beta+","+
+                        event.gamma;
 
-                a.innerHTML = Math.round(alpha);
-                b.innerHTML = Math.round(beta);
-                g.innerHTML = Math.round(gamma);
+
+
+//                a.innerHTML = Math.round(orientation.alpha);
+//                b.innerHTML = Math.round(orientation.beta);
+//                g.innerHTML = Math.round(orientation.gamma);
+
+                if(webSock){
+                    webSock.send(orientation)
+                }
 
             }, false);
         }else{
@@ -35,28 +42,30 @@
         {
             if ("WebSocket" in window)
             {
-                alert("您的浏览器支持 WebSocket!");
+                //alert("您的浏览器支持 WebSocket!");
 
                 // 打开一个 web socket
-                var ws = new WebSocket("ws://192.168.1.132:7778/ws");
+                var ws = new WebSocket("ws://192.168.1.132:7778/ws/");
 
                 ws.onopen = function()
                 {
-                    // Web Socket 已连接上，使用 send() 方法发送数据
-                    ws.send("发送数据");
-                    alert("数据发送中...");
+//                    webSock = ws
+//                    for(var i=0; i<120; i+=0.01){
+//                        ws.send(i+","+i+","+i)
+//                    }
+                    //ws.send("发送数据");
                 };
 
                 ws.onmessage = function (evt)
                 {
                     var received_msg = evt.data;
-                    alert("数据已接收...");
+                    console.log (received_msg);
                 };
 
                 ws.onclose = function()
                 {
                     // 关闭 websocket
-                    alert("连接已关闭...");
+                    console.log("连接已关闭...");
                 };
             }
 
