@@ -38,6 +38,7 @@ public class RemoteController extends WebSocketServlet {
 
             while (true) {
                 mouse.setMouse(position[0], position[1], 0);
+                //LOGGER.info(position[0]+","+position[1]);
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
