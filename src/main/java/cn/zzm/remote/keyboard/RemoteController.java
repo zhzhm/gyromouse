@@ -34,13 +34,26 @@ public class RemoteController extends WebSocketServlet {
         // set half hour timeout
         factory.getPolicy().setIdleTimeout(1800000L);
         factory.register(JcatWebSocket.class);
+//        new Thread(()->{
+//            for(double i = 0; i<90; i+=0.01){
+//                position[0] = i;
+//                position[1] = i;
+//                try {
+//                    Thread.sleep(3);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//            System.exit(0);
+//        }).start();
         new Thread(() -> {
 
             while (true) {
                 mouse.setMouse(position[0], position[1], 0);
-                //LOGGER.info(position[0]+","+position[1]);
+                // LOGGER.info(position[0]+","+position[1]);
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -61,11 +74,12 @@ public class RemoteController extends WebSocketServlet {
 
         @OnWebSocketMessage
         public void onMessage(Session session, String message) {
-            // LOGGER.debug("Socket message received: {}", message);
+             LOGGER.debug("Socket message received: "+ message);
             //JSONObject request;
 //            try {
 //                request = JSON.parseObject(message);
             String[] xyz = message.split(",");
+            if(xyz.length<3) return;
             position[0] = Double.parseDouble(xyz[0]);
             position[1] = Double.parseDouble(xyz[1]);
             // mouse.setMouse(Double.parseDouble(xyz[0]),Double.parseDouble(xyz[1]),Double.parseDouble(xyz[2]));

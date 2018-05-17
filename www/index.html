@@ -15,12 +15,20 @@
     </style>
     <script>
         var webSock = undefined
+        var orientation = "1.0,1.0,1.0";
+        setInterval(function(){
+            if(webSock){
+                alert(orientation)
+                webSock.send(orientation);
+            }
+        },100)
+
         if(window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(event) {
 //                var a = document.getElementById('alpha'),
 //                    b = document.getElementById('beta'),
 //                    g = document.getElementById('gamma'),
-                  var  orientation = event.alpha+","+
+                orientation = event.alpha+","+
                         event.beta+","+
                         event.gamma;
 
@@ -30,9 +38,9 @@
 //                b.innerHTML = Math.round(orientation.beta);
 //                g.innerHTML = Math.round(orientation.gamma);
 
-                if(webSock){
-                    webSock.send(orientation)
-                }
+//                if(webSock){
+//                    webSock.send(orientation)
+//                }
 
             }, false);
         }else{
